@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nikke-hub-eureka-server
+  labels:
+    app: nikke-hub-eureka-server
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nikke-hub-eureka-server
+
+  template:
+    metadata:
+      labels:
+        app: nikke-hub-eureka-server
+
+    spec:
+      containers:
+        - name: nikke-hub-eureka-server
+          image: hyuse98/nikke-hub-eureka-server:latest
+          imagePullPolicy: Always #IfNotPresent
+
+          ports:
+            - containerPort: 8761
+
+              #env:
+              #- name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              #value: "http://nikke-hub-eureka-server-service:8761/eureka/"
+
+              #volumeMounts:
+              #- name: config-volume
+              #mountPath: /config
+
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+
+            #volumes:
+            #- name: config-volume
+            #configMap:
+            #name: nikke-hub-eureka-serve-config
